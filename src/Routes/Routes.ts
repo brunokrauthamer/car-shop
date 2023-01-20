@@ -11,7 +11,6 @@ router.get(
   '/cars/:id',
   (req: Request, res: Response, next: NextFunction) => new CarMiddleware()
     .validateIdFormat(req, res, next),
-  // (req: Request, res: Response, next: NextFunction) => new CarMiddleware().verifyId(req, res, next),
   (req: Request, res: Response) => new CarController().getById(req, res),
 );
 
