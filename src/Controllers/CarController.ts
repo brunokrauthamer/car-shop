@@ -11,6 +11,17 @@ class CarController {
     const response = await this.service.create(carInfo);
     res.status(201).json(response);
   }
+
+  public async getAll(_req: Request, res: Response) {
+    const response = await this.service.getAll();
+    res.status(200).json(response);
+  }
+
+  public async getById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { type, message } = await this.service.getById(id);
+    res.status(type).json(message);
+  }
 }
 
 export default CarController;

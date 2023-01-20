@@ -3,21 +3,38 @@ import ICar from '../Interfaces/ICar';
 import Car from '../Domains/Car';
 
 class CarService {
+  private model;
+  constructor() {
+    this.model = new CarODM();
+  }
   public async create(car: ICar): Promise<ICar> {
     const carInstance = new Car(car);
     const carInfo = carInstance.getCarInfo();
-    const model = new CarODM();
-    const newCar = await model.create(carInfo);
+    const newCar = await this.model.create(carInfo);
     return {
       id: newCar._id,
-      model: newCar.model,
-      year: newCar.year,
-      color: newCar.color,
-      status: newCar.status,
-      buyValue: newCar.buyValue,
-      seatsQty: newCar.seatsQty,
-      doorsQty: newCar.doorsQty,
+      ...carInfo,
     };
+  }
+
+  public async getAll(): Promise<ICar[]> {
+    const data = await this.model.getAll();
+    const list = data.map((car: any) => {
+      const carInfo = car._doc;
+      carInfo.id = carInfo._id;
+      return carInfo;
+    });
+    return list;
+  }
+
+  public async getById(id: string) {
+    const data = await this.model.getById(id) as any;
+    if (data) {
+      const car = data._doc;
+      car.id = car._id;
+      console.log('car\n\n\n\n\n\n', data);
+      return { type: 200, message: car };
+    } return { type: 404, message: { message: 'Car not found' } };
   }
 }
 
