@@ -1,11 +1,11 @@
-import CarODM from '../Models/CarODM';
+import VehicleODM from '../Models/CarODM';
 import ICar from '../Interfaces/ICar';
 import Car from '../Domains/Car';
 
 class CarService {
   private model;
   constructor() {
-    this.model = new CarODM();
+    this.model = new VehicleODM();
   }
   public async create(car: ICar): Promise<ICar> {
     const carInstance = new Car(car);
@@ -32,7 +32,15 @@ class CarService {
     if (data) {
       const car = data._doc;
       car.id = car._id;
-      console.log('car\n\n\n\n\n\n', data);
+      return { type: 200, message: car };
+    } return { type: 404, message: { message: 'Car not found' } };
+  }
+
+  public async updateById(id: string, updatedCar: ICar) {
+    const data = await this.model.updateById(id, updatedCar) as any;
+    if (data) {
+      const car = data._doc;
+      car.id = car._id;
       return { type: 200, message: car };
     } return { type: 404, message: { message: 'Car not found' } };
   }

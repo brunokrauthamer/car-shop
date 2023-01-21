@@ -1,7 +1,7 @@
 import { Model, Schema, model, models } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 
-class CarODM {
+class VehicleODM {
   private schema: Schema;
   private model: Model<ICar>;
 
@@ -30,6 +30,12 @@ class CarODM {
   public getById(id: string) {
     return this.model.findOne({ _id: id });
   }
+
+  public updateById(id: string, updatedCar: ICar) {
+    const filter = { _id: id };
+    const update = updatedCar;
+    return this.model.findOneAndUpdate(filter, update, { new: true });
+  }
 }
 
-export default CarODM;
+export default VehicleODM;

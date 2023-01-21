@@ -13,5 +13,11 @@ router.get(
     .validateIdFormat(req, res, next),
   (req: Request, res: Response) => new CarController().getById(req, res),
 );
+router.put(
+  '/cars/:id',
+  (req: Request, res: Response, next: NextFunction) => new CarMiddleware()
+    .validateIdFormat(req, res, next),
+  (req: Request, res: Response) => new CarController().updateById(req, res),
+);
 
 export default router;
