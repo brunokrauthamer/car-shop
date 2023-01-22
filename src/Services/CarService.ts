@@ -12,14 +12,14 @@ class CarService {
     const carInfo = carInstance.getCarInfo();
     const newCar = await this.model.create(carInfo);
     return {
-      id: newCar._id,
+      id: newCar._doc._id,
       ...carInfo,
     };
   }
 
   public async getAll(): Promise<ICar[]> {
     const data = await this.model.getAll();
-    const list = data.map((car: any) => {
+    const list = data.map((car) => {
       const carInfo = car._doc;
       carInfo.id = carInfo._id;
       return carInfo;
@@ -28,7 +28,7 @@ class CarService {
   }
 
   public async getById(id: string) {
-    const data = await this.model.getById(id) as any;
+    const data = await this.model.getById(id);
     if (data) {
       const car = data._doc;
       car.id = car._id;
@@ -37,7 +37,7 @@ class CarService {
   }
 
   public async updateById(id: string, updatedCar: ICar) {
-    const data = await this.model.updateById(id, updatedCar) as any;
+    const data = await this.model.updateById(id, updatedCar);
     if (data) {
       const car = data._doc;
       car.id = car._id;

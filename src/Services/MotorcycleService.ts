@@ -12,14 +12,14 @@ class MotorcycleService {
     const motorcycleInfo = motorcycleInstance.getMotorcycleInfo();
     const newMotorcycle = await this.model.create(motorcycleInfo);
     return {
-      id: newMotorcycle._id,
+      id: newMotorcycle._doc._id,
       ...motorcycleInfo,
     };
   }
 
   public async getAll(): Promise<IMotorcycle[]> {
     const data = await this.model.getAll();
-    const list = data.map((motorcycle: any) => {
+    const list = data.map((motorcycle) => {
       const motorcycleInfo = motorcycle._doc;
       motorcycleInfo.id = motorcycleInfo._id;
       return motorcycleInfo;
@@ -28,7 +28,7 @@ class MotorcycleService {
   }
 
   public async getById(id: string) {
-    const data = await this.model.getById(id) as any;
+    const data = await this.model.getById(id);
     if (data) {
       const motorcycle = data._doc;
       motorcycle.id = motorcycle._id;
@@ -37,7 +37,7 @@ class MotorcycleService {
   }
 
   public async updateById(id: string, updatedMotorcycle: IMotorcycle) {
-    const data = await this.model.updateById(id, updatedMotorcycle) as any;
+    const data = await this.model.updateById(id, updatedMotorcycle);
     if (data) {
       const motorcycle = data._doc;
       motorcycle.id = motorcycle._id;
