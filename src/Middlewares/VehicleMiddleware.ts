@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import CarService from '../Services/CarService';
 
-class CarMiddleware {
+class VehicleMiddleware {
   public service;
   constructor() {
     this.service = new CarService();
@@ -18,4 +18,4 @@ class CarMiddleware {
   }
 }
 
-export default CarMiddleware;
+export default VehicleMiddleware;
