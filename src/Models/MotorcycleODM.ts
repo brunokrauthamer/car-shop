@@ -1,10 +1,9 @@
-import { Model, Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import AbstractODM from './AbstractODM';
 
-class MotorcycleODM extends AbstractODM {
+class MotorcycleODM extends AbstractODM<IMotorcycle> {
   private schema: Schema;
-  protected model: Model<IMotorcycle>;
 
   constructor() {
     super();

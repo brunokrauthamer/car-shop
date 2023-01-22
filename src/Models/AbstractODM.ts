@@ -1,23 +1,27 @@
 // import IVehicle from '../Interfaces/IVehicle';
-// import { Model } from 'mongoose';
+import { Model, models } from 'mongoose';
 // import IVehicle from '../Interfaces/IVehicle';
 
-class AbstractODM {
-  protected model: any;
+class AbstractODM<T> {
+  protected model: Model<T>;
 
-  public async create<T>(vehicle: T): Promise<T> {
+  constructor() {
+    this.model = models.Bypass;
+  }
+
+  public async create(vehicle: T): Promise<T> {
     return this.model.create({ ...vehicle });
   }
 
-  public async getAll<T>(): Promise<T[]> {
+  public async getAll(): Promise<T[]> {
     return this.model.find({});
   }
 
-  public getById<T>(id: string): Promise<T> {
+  public async getById(id: string): Promise<T | null> {
     return this.model.findOne({ _id: id });
   }
 
-  public updateById<T>(id: string, updatedVehicle: T) {
+  public updateById(id: string, updatedVehicle: T) {
     const filter = { _id: id };
     const update = updatedVehicle;
     return this.model.findOneAndUpdate(filter, update, { new: true });

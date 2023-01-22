@@ -1,10 +1,9 @@
-import { Model, Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 import AbstractODM from './AbstractODM';
 
-class CarODM extends AbstractODM {
+class CarODM extends AbstractODM<ICar> {
   private schema: Schema;
-  protected model: Model<ICar>;
   constructor() {
     super();
     this.schema = new Schema<ICar>({
