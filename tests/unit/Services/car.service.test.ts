@@ -6,8 +6,9 @@ import ICar from '../../../src/Interfaces/ICar';
 
 describe('Unit tests service layer', function () {
   it('should create a new car', async function () {
+    const model = 'Marea Turbo do Matuca';
     const inputCar: ICar = {
-      model: 'Marea',
+      model,
       year: 2002,
       color: 'Black',
       status: true,
@@ -16,9 +17,9 @@ describe('Unit tests service layer', function () {
       seatsQty: 5,
     };
 
-    const outputCar: ICar = {
+    const expectedResponse: ICar = {
       id: '634852326b35b59438fbea2f',
-      model: 'Marea',
+      model,
       year: 2002,
       color: 'Black',
       status: true,
@@ -27,15 +28,17 @@ describe('Unit tests service layer', function () {
       seatsQty: 5,
     };
 
-    const mockModelCar: ICar = {
-      _id: '634852326b35b59438fbea2f',
-      model: 'Marea',
-      year: 2002,
-      color: 'Black',
-      status: true,
-      buyValue: 15.990,
-      doorsQty: 4,
-      seatsQty: 5,
+    const mockModelCar = {
+      _doc: {
+        _id: '634852326b35b59438fbea2f',
+        model,
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        doorsQty: 4,
+        seatsQty: 5,
+      },
     };
 
     sinon.stub(Model, 'create').resolves(mockModelCar);
@@ -43,7 +46,7 @@ describe('Unit tests service layer', function () {
     const service = new CarService();
     const result = await service.create(inputCar);
 
-    expect(result).to.be.deep.equal(outputCar);
+    expect(expectedResponse).to.be.deep.equal(result);
   });
 
   it('should get all cars from mongo', async function () {
