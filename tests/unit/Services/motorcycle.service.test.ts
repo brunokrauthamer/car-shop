@@ -1,211 +1,235 @@
-// import { expect } from 'chai';
-// import sinon from 'sinon';
-// import { Model } from 'mongoose';
-// import MotorcycleService from '../../../src/Services/MotorcyleService';
-// import IMotorcycle from '../../../src/Interfaces/IMotorcycle';
+import { expect } from 'chai';
+import sinon from 'sinon';
+import { Model } from 'mongoose';
+import MotorcycleService from '../../../src/Services/MotorcycleService';
+import IMotorcycle from '../../../src/Interfaces/IMotorcycle';
 
-// describe('Unit tests service layer', function () {
-//   it('should create a new car', async function () {
-//     const inputCar: ICar = {
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+describe('Unit tests service layer', function () {
+  it('should create a new moto', async function () {
+    const inputMoto: IMotorcycle = {
+      model: 'Hornet',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'street',
+      engineCapacity: 600,
+    };
 
-//     const outputCar: ICar = {
-//       id: '634852326b35b59438fbea2f',
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+    const expectedResponse: IMotorcycle = {
+      id: '634852326b35b59438fbea2f',
+      model: 'Hornet',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'street',
+      engineCapacity: 600,
+    };
 
-//     const mockModelCar: ICar = {
-//       _id: '634852326b35b59438fbea2f',
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+    const mockModelMoto = {
+      _doc: {
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      },
+    };
 
-//     sinon.stub(Model, 'create').resolves(mockModelCar);
+    sinon.stub(Model, 'create').resolves(mockModelMoto);
 
-//     const service = new CarService();
-//     const result = await service.create(inputCar);
+    const service = new MotorcycleService();
+    const result = await service.create(inputMoto);
 
-//     expect(result).to.be.deep.equal(outputCar);
-//   });
+    expect(result).to.be.deep.equal(expectedResponse);
+  });
 
-//   it('should get all cars from mongo', async function () {
-//     const outputList = [
-//       { _doc: {
-//         _id: '634852326b35b59438fbea2g',
-//         model: 'Marea',
-//         year: 2002,
-//         color: 'Black',
-//         status: true,
-//         buyValue: 15.990,
-//         doorsQty: 4,
-//         seatsQty: 5,
-//       } },
-//       { _doc: {
-//         _id: '634852326b35b59438fbea2f',
-//         model: 'Marea Turbo',
-//         year: 2002,
-//         color: 'Black',
-//         status: true,
-//         buyValue: 15.990,
-//         doorsQty: 4,
-//         seatsQty: 5,
-//       } },
-//     ];
+  it('should get all cars from mongo', async function () {
+    const mockModelMoto = [
+      { _doc: {
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      } },
+      { _doc: {
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      } },
+    ];
 
-//     const response: ICar[] = [
-//       {
-//         id: '634852326b35b59438fbea2g',
-//         _id: '634852326b35b59438fbea2g',
-//         model: 'Marea',
-//         year: 2002,
-//         color: 'Black',
-//         status: true,
-//         buyValue: 15.990,
-//         doorsQty: 4,
-//         seatsQty: 5,
-//       },
-//       {
-//         id: '634852326b35b59438fbea2f',
-//         _id: '634852326b35b59438fbea2f',
-//         model: 'Marea Turbo',
-//         year: 2002,
-//         color: 'Black',
-//         status: true,
-//         buyValue: 15.990,
-//         doorsQty: 4,
-//         seatsQty: 5,
-//       },
-//     ];
+    const response: IMotorcycle[] = [
+      {
+        id: '634852326b35b59438fbea2f',
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      },
+      {
+        id: '634852326b35b59438fbea2f',
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      },
+    ];
 
-//     sinon.stub(Model, 'find').resolves(outputList);
+    sinon.stub(Model, 'find').resolves(mockModelMoto);
 
-//     const service = new CarService();
-//     const result = await service.getAll();
+    const service = new MotorcycleService();
+    const result = await service.getAll();
 
-//     expect(result).to.be.deep.equal(response);
-//   });
+    expect(result).to.be.deep.equal(response);
+  });
 
-//   it('should get an existing car', async function () {
-//     const dbCar = { _doc: {
-//       _id: '634852326b35b59438fbea2g',
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     } };
+  it('should get an existing car', async function () {
+    const mockModelMoto = { _doc: {
+      _id: '634852326b35b59438fbea2g',
+      model: 'Marea',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      doorsQty: 4,
+      seatsQty: 5,
+    } };
 
-//     const responseCar = {
-//       id: '634852326b35b59438fbea2g',
-//       _id: '634852326b35b59438fbea2g',
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+    const response = {
+      type: 200,
+      message: {
+        id: '634852326b35b59438fbea2g',
+        _id: '634852326b35b59438fbea2g',
+        model: 'Marea',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        doorsQty: 4,
+        seatsQty: 5,
+      },
+    };
 
-//     sinon.stub(Model, 'findOne').resolves(dbCar);
+    const id = '634852326b35b59438fbea2g';
 
-//     const service = new CarService();
-//     const result = await service.getById('634852326b35b59438fbea2g');
+    sinon.stub(Model, 'findOne').resolves(mockModelMoto);
 
-//     expect(result.message).to.be.deep.equal(responseCar);
-//     expect(result.type).to.be.equal(200);
-//   });
+    const service = new MotorcycleService();
+    const result = await service.getById(id);
 
-//   it('shouldnt find an inexisting car', async function () {
-//     const dbCar = null;
+    expect(result).to.be.deep.equal(response);
+  });
 
-//     sinon.stub(Model, 'findOne').resolves(dbCar);
-//     const service = new CarService();
-//     const result = await service.getById('634852326b35b59438fbea2g');
+  it('shouldnt find an inexisting car', async function () {
+    const mockModelMoto = null;
+    const id = '634852326b35b59438fbea2g';
 
-//     expect(result.message).to.be.deep.equal({ message: 'Car not found' });
-//     expect(result.type).to.be.equal(404);
-//   });
+    const expectedResponse = { type: 404, message: { message: 'Motorcycle not found' } };
 
-//   it('should update an existing car', async function () {
-//     const newCar = {
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+    sinon.stub(Model, 'findOne').resolves(mockModelMoto);
+    const service = new MotorcycleService();
+    const result = await service.getById(id);
 
-//     const id = '634852326b35b59438fbea2g';
+    expect(result).to.be.deep.equal(expectedResponse);
+  });
 
-//     const responseCar = { _doc: {
-//       id: '634852326b35b59438fbea2g',
-//       _id: '634852326b35b59438fbea2g',
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     },
-//     };
+  it('should update an existing car', async function () {
+    const inputMoto: IMotorcycle = {
+      model: 'Hornet',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'street',
+      engineCapacity: 600,
+    };
 
-//     sinon.stub(Model, 'findOneAndUpdate').resolves(responseCar);
+    const expectedResponse = {
+      type: 200,
+      message: {
+        id: '634852326b35b59438fbea2f',
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      },
+    };
 
-//     const service = new CarService();
-//     const result = await service.updateById(id, newCar);
+    const mockModelMoto = {
+      _doc: {
+        _id: '634852326b35b59438fbea2f',
+        model: 'Hornet',
+        year: 2002,
+        color: 'Black',
+        status: true,
+        buyValue: 15.990,
+        category: 'street',
+        engineCapacity: 600,
+      },
+    };
 
-//     expect(responseCar._doc).to.be.deep.equal(result.message);
-//     expect(result.type).to.be.equal(200);
-//   });
+    const id = '634852326b35b59438fbea2f';
 
-//   it('shouldnt update an inexisting car', async function () {
-//     const newCar = {
-//       model: 'Marea',
-//       year: 2002,
-//       color: 'Black',
-//       status: true,
-//       buyValue: 15.990,
-//       doorsQty: 4,
-//       seatsQty: 5,
-//     };
+    sinon.stub(Model, 'findOneAndUpdate').resolves(mockModelMoto);
 
-//     const id = '634852326b35b59438fbea2gdasdsa';
+    const service = new MotorcycleService();
+    const result = await service.updateById(id, inputMoto);
 
-//     const responseCar = null;
+    expect(result).to.be.deep.equal(expectedResponse);
+  });
 
-//     sinon.stub(Model, 'findOneAndUpdate').resolves(responseCar);
-//     const service = new CarService();
-//     const result = await service.updateById(id, newCar);
+  it('shouldnt update an inexisting car', async function () {
+    const inputMoto: IMotorcycle = {
+      model: 'Hornet',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'street',
+      engineCapacity: 600,
+    };
 
-//     expect(result.message).to.be.deep.equal({ message: 'Car not found' });
-//     expect(result.type).to.be.equal(404);
-//   });
+    const expectedResponse = { type: 404, message: { message: 'Motorcycle not found' } };
 
-//   afterEach(function () {
-//     sinon.restore();
-//   });
-// });
+    const mockModelMoto = null;
+
+    const id = '634852326b35b59438fbea2g';
+
+    sinon.stub(Model, 'findOneAndUpdate').resolves(mockModelMoto);
+
+    const service = new MotorcycleService();
+    const result = await service.updateById(id, inputMoto);
+
+    expect(result).to.be.deep.equal(expectedResponse);
+  });
+
+  afterEach(function () {
+    sinon.restore();
+  });
+});
